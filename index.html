@@ -497,18 +497,7 @@
             btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i>';
         }
 
-        async function analisarMesComIA() {
-            const btn = document.getElementById('btnAnaliseIA');
-            const box = document.getElementById('aiResponseBox');
-            btn.innerHTML = '<i class="fa-solid fa-brain fa-bounce"></i> ANALISANDO...'; btn.disabled = true; box.style.display = 'none';
-            let totalGasto = 0, totalGanho = 0, totalGuardado = 0;
-            const itensDescricao = [];
-            transacoesCache.forEach(t => {
-                const val = parseFloat(t.valor);
-                if (t.tipo === 'gasto') { totalGasto += val; if (itensDescricao.length < 30) itensDescricao.push(`${t.descricao} (R$${val})`); }
-                if (t.tipo === 'ganho') totalGanho += val;
-                if (t.tipo === 'reserva') totalGuardado += val;
-            });
+        
             const saldo = totalGanho - totalGasto - totalGuardado;
             const taxaPoupanca = totalGanho > 0 ? ((totalGuardado / totalGanho) * 100).toFixed(1) : 0;
             const prompt = `Atue como Coach Financeiro. Dados: Ganho ${totalGanho}, Gasto ${totalGasto}, Guardado ${totalGuardado} (${taxaPoupanca}%), Saldo ${saldo}. Gastos: ${itensDescricao.join(', ')}. Dê diagnóstico, alerta e 3 dicas.`;
