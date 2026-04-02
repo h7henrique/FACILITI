@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Facilit</title>
+    <title>Facilit Pro 8.0</title>
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
@@ -136,13 +136,13 @@
         <div style="display:flex; gap: 30px;">
             <div style="text-align:center;">
                 <div class="avatar-glow" onclick="logar('Bianca')">
-                    <div class="avatar-inner">👩🏽</div>
+                    <div class="avatar-inner">👩🏻</div>
                 </div>
                 <div style="margin-top:15px; font-weight:700;">Bianca</div>
             </div>
             <div style="text-align:center;">
                 <div class="avatar-glow" onclick="logar('Beatriz')">
-                    <div class="avatar-inner">👩🏻</div>
+                    <div class="avatar-inner">👩🏼</div>
                 </div>
                 <div style="margin-top:15px; font-weight:700;">Beatriz</div>
             </div>
@@ -206,7 +206,9 @@
                         <div style="font-size:2.2rem; font-weight:800;" id="gastoMesTotal">R$ 0,00</div>
                     </div>
                 </div>
-               
+                <button class="ai-btn-analyse" onclick="analisarMesComIA()" id="btnAnaliseIA">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> PEDIR CONSELHO DA IA
+                </button>
                 <div id="aiResponseBox" class="ai-message-box" style="display:none;"></div>
             </div>
         </div>
@@ -495,7 +497,18 @@
             btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i>';
         }
 
-        
+        async function analisarMesComIA() {
+            const btn = document.getElementById('btnAnaliseIA');
+            const box = document.getElementById('aiResponseBox');
+            btn.innerHTML = '<i class="fa-solid fa-brain fa-bounce"></i> ANALISANDO...'; btn.disabled = true; box.style.display = 'none';
+            let totalGasto = 0, totalGanho = 0, totalGuardado = 0;
+            const itensDescricao = [];
+            transacoesCache.forEach(t => {
+                const val = parseFloat(t.valor);
+                if (t.tipo === 'gasto') { totalGasto += val; if (itensDescricao.length < 30) itensDescricao.push(`${t.descricao} (R$${val})`); }
+                if (t.tipo === 'ganho') totalGanho += val;
+                if (t.tipo === 'reserva') totalGuardado += val;
+            });
             const saldo = totalGanho - totalGasto - totalGuardado;
             const taxaPoupanca = totalGanho > 0 ? ((totalGuardado / totalGanho) * 100).toFixed(1) : 0;
             const prompt = `Atue como Coach Financeiro. Dados: Ganho ${totalGanho}, Gasto ${totalGasto}, Guardado ${totalGuardado} (${taxaPoupanca}%), Saldo ${saldo}. Gastos: ${itensDescricao.join(', ')}. Dê diagnóstico, alerta e 3 dicas.`;
