@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Facilit Pro 8.0</title>
+    <title>Facilit</title>
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
@@ -204,6 +204,8 @@
                     <div>
                         <div style="opacity:0.8; font-size:0.9rem;">GASTOS DO MÊS</div>
                         <div style="font-size:2.2rem; font-weight:800;" id="gastoMesTotal">R$ 0,00</div>
+                    </div>
+                </div>
                
                 <div id="aiResponseBox" class="ai-message-box" style="display:none;"></div>
             </div>
@@ -245,7 +247,7 @@
     <script>
         const SUPABASE_URL = 'https://jaugvxtviorlfmgfwjsv.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_NRFhvTIg3Ji9oR5dV6NjAg_GNy6zAjl';
-        const GROQ_API_KEY = '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';
+       
 
         let client;
         try { client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY); } catch (e) { console.error(e); }
